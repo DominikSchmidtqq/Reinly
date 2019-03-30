@@ -12,18 +12,61 @@ export default class Login extends Component {
         super(props);
         this.state = {
             formValid: true,
+            validEmail: false,
+            emailAddress: '',
+            validPassword: false,
+
 
         };
         this.handleCloseNotification = this.handleCloseNotification.bind(this);
+        this.handleEmailChange = this.handleEmailChange.bind(this);
+        this.handleNextButton = this.handleNextButton.bind(this);
+        this.toggleNextButtonState = this.toggleNextButtonState.bind(this);
+        this.handlePasswordChange = this.handlePasswordChange.bind(this);
     }
 
     handleNextButton() {
-        alert("Next Button")
+        if (this.state.emailAddress === '123@gmail.com' && this.state.validPassword) {
+            this.setState({ formValid: true})
+        } else {
+            this.setState({ formValid: false})
+        }
     }
 
     handleCloseNotification() {
         this.setState({ formValid: true });
     }
+
+    handleEmailChange(email) {
+        const emailCheckRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        this.setState({ emailAddress: email})
+        if (!this.state.validEmail) {
+            if (emailCheckRegex.test(email)) {
+                this.setState({ validEmail: true});
+            } else if (!emailCheckRegex.test(email)) {
+                this.setState({ validEmail: false})
+            }
+        }
+    }
+
+    handlePasswordChange(password) {
+        if (!this.state.validPassword) {
+            if (password.length > 6) {
+                this.setState({ validPassword: true })
+            } else if (password.length <= 6) {
+                this.setState({ validPassword: false })
+            }
+        }
+    }
+
+    toggleNextButtonState() {
+        const { validEmail, validPassword} = this.state;
+        if (validEmail && validPassword) {
+            return false;
+        }
+        return true;
+    }
+
 
     render() {
         const { formValid } = this.state;
@@ -41,6 +84,7 @@ export default class Login extends Component {
                                     borderBottomColor = { colors.white }
                                     inputType = "email"
                                     customStyle = {{ marginBottom: 30 }}
+                                    onChangeText = { this.handleEmailChange }
                         />
                         <InputField labelText = "PASSWORD"
                                     labeTextSize = { 14 }
@@ -49,11 +93,13 @@ export default class Login extends Component {
                                     borderBottomColor = { colors.white }
                                     inputType = "password"
                                     customStyle = { {marginBottom: 30} }
+                                    onChangeText={ this.handlePasswordChange }
                         />
                     </ScrollView>
                     <View style = { styles.nextButton }>
                         <NextArrowButton
                             handleNextButton = { this.handleNextButton }
+                            disabled = { this.toggleNextButtonState() }
                         />
                     </View>
                     <View style = { showNotification ? {marginTop: 10} : {}}>
