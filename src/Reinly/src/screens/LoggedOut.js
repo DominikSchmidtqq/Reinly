@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class LoggedOut extends Component {
     onFacebookPress() {
-        alert('Facebook')
+        alert('Facebook') 
     }
 
     onCreateAccountPress() {
