@@ -5,42 +5,62 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import {View, Text, ScrollView, StyleSheet, KeyboardAvoidingView} from 'react-native'
 import InputField from '../components/form/InputField'
 import NextArrowButton from '../components/buttons/NextArrowButton'
+import Notification from '../components/Notification';
 
 export default class Login extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            formValid: true,
+
+        };
+        this.handleCloseNotification = this.handleCloseNotification.bind(this);
+    }
+
     handleNextButton() {
         alert("Next Button")
     }
 
+    handleCloseNotification() {
+        this.setState({ formValid: true });
+    }
+
     render() {
+        const { formValid } = this.state;
+        const showNotification = formValid ? false : true;
+        const background = formValid ? colors.blue : colors.burntOrange;
         return(
-            <KeyboardAvoidingView style = {styles.wrapper} behavioe = "padding">
-                <View style = {styles.scrollViewWrapper}>
-                    <ScrollView style = {styles.scrollView}>
-                        <Text style ={styles.loginHeader}>Log In</Text>
+            <View style = { [{ backgroundColor: background }, styles.wrapper] } behavior = "padding">
+                <View style = { styles.scrollViewWrapper }>
+                    <ScrollView style = { styles.scrollView }>
+                        <Text style = { styles.loginHeader }>Log In</Text>
                         <InputField labelText = "EMAIL ADDRESS"
-                                    labeTextSize = {14}
-                                    labelColor = {colors.white}
-                                    textColor = {colors.white}
-                                    borderBottomColor = {colors.white}
+                                    labeTextSize = { 14 }
+                                    labelColor = { colors.white }
+                                    textColor = { colors.white }
+                                    borderBottomColor = { colors.white }
                                     inputType = "email"
-                                    customStyle = {{marginBottom: 30}}
+                                    customStyle = {{ marginBottom: 30 }}
                         />
                         <InputField labelText = "PASSWORD"
-                                    labeTextSize = {14}
-                                    labelColor = {colors.white}
-                                    textColor = {colors.white}
-                                    borderBottomColor = {colors.white}
+                                    labeTextSize = { 14 }
+                                    labelColor = { colors.white }
+                                    textColor = { colors.white }
+                                    borderBottomColor = { colors.white }
                                     inputType = "password"
-                                    customStyle = {{marginBottom: 30}}
+                                    customStyle = { {marginBottom: 30} }
                         />
                     </ScrollView>
-                    <View style = {styles.nextButton}>
+                    <View style = { styles.nextButton }>
                         <NextArrowButton
-                            handleNextButton = {this.handleNextButton}
+                            handleNextButton = { this.handleNextButton }
                         />
                     </View>
+                    <View style = { showNotification ? {marginTop: 10} : {}}>
+                        <Notification showNotification = { showNotification } handleCloseNotification = { this.handleCloseNotification }  type = "Error" firstLine = "Invalid credentials." secondLine = " Please try again."/>
+                    </View>
                 </View>
-            </KeyboardAvoidingView>
+            </View>
         );
     }
 }
@@ -49,7 +69,6 @@ const styles = StyleSheet.create({
     wrapper: {
         display: 'flex',
         flex: 1,
-        backgroundColor: colors.blue
     },
     scrollViewWrapper: {
         marginTop: 70,

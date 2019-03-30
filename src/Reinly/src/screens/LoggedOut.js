@@ -20,23 +20,23 @@ export default class LoggedOut extends Component {
 
     render() {
         return(
-            <View style = {styles.wrapper}>
-                <View style = {styles.welcomeWrapper}>
-                    <Image source = {require('../images/reinly_logo.png')} style = {styles.logo}/>
-                    <Text style = {styles.welcomeText}>Welcome to Reinly!</Text>
+            <View style = { styles.wrapper }>
+                <View style = { styles.welcomeWrapper }>
+                    <Image source = { require('../images/reinly_logo.png') } style = { styles.logo }/>
+                    <Text style = { styles.welcomeText }>Welcome to Reinly!</Text>
                     <RoundedButton text = "Continue with Facebook"
                                    textColor = {colors.blue}
                                    background = {colors.white}
-                                   icon = {<Icon name = "facebook" size = {20} style = {styles.facebookButtonIcon} />}
+                                   icon = { <Icon name = "facebook" size = { 20 } style = { styles.facebookButtonIcon } /> }
                                    handleOnPress = {this.onFacebookPress}
                     />
                     <RoundedButton text = "Login"
-                                   textColor = {colors.white}
-                                   handleOnPress = {this.onLoginPress}
+                                   textColor = { colors.white }
+                                   handleOnPress = { this.onLoginPress }
                     />
                     <RoundedButton text = "Create Account"
-                                   textColor = {colors.white}
-                                   handleOnPress = {this.onCreateAccountPress}
+                                   textColor = { colors.white }
+                                   handleOnPress = { this.onCreateAccountPress }
                     />
                 </View>
             </View>

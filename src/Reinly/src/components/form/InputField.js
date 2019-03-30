@@ -2,20 +2,21 @@ import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import colors from '../../styles/colors'
-import {View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
 
 export default class InputField extends Component {
     constructor(props) {
         super(props);
         this.state = {
             secureInput: props.inputType === 'text' || props.inputType === 'email' ? false : true,
-        }
+        };
         this.toggledShowPassword = this.toggledShowPassword.bind(this);
     }
 
     toggledShowPassword() {
-        this.setState({ secureInput: ! this.state.secureInput});
+        this.setState({ secureInput: ! this.state.secureInput });
     }
+
     render() {
         const { labelText, labelTextSize, labelColor,textColor, borderBottomColor, inputType, customStyle } = this.props;
         const { secureInput } = this.state
@@ -25,17 +26,17 @@ export default class InputField extends Component {
         const bottomColor = borderBottomColor || 'transparent'
 
         return(
-            <View style = {[ customStyle, styles.wrapper]}>
-                <Text style = {[{color, fontSize}, styles.labelText]}>{labelText}</Text>
-                {inputType === 'password' ?
-                    <TouchableOpacity style = {styles.showButton} onPress = {this.toggledShowPassword} >
-                        <Text style = {styles.showButtonText} >{secureInput ? 'Show' : 'Hide'}</Text>
+            <View style = { [ customStyle, styles.wrapper] }>
+                <Text style = { [{color, fontSize}, styles.labelText] }>{ labelText }</Text>
+                { inputType === 'password' ?
+                    <TouchableOpacity style = { styles.showButton } onPress = {this.toggledShowPassword} >
+                        <Text style = { styles.showButtonText } >{ secureInput ? 'Show' : 'Hide' }</Text>
                     </TouchableOpacity>
                 : null }
                 <TextInput
                     autoCorrect = {false}
-                    style = {[{color: inputTextColor, borderBottomColor: bottomColor}, styles.inputField]}
-                    secureTextEntry = {secureInput}
+                    style = { [{color: inputTextColor, borderBottomColor: bottomColor}, styles.inputField] }
+                    secureTextEntry = { secureInput }
                 />
             </View>
         );
